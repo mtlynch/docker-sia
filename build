@@ -21,6 +21,8 @@ docker run \
   --name sia-container \
   sia-image
 
+sleep 5s
+
 if [ -e "${DUMMY_DATA_DIR}/consensus" ]; then
   (echo "Created consensus folder successfully" && exit 0)
 else
