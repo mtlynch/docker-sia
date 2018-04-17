@@ -1,7 +1,7 @@
 FROM debian:jessie-slim
 LABEL maintainer="Michael Lynch <michael@mtlynch.io>"
 
-ARG SIA_VERSION="1.3.2"
+ARG SIA_VERSION="1.1.2"
 ENV SIA_VERSION $SIA_VERSION
 ARG SIA_PACKAGE="Sia-v${SIA_VERSION}-linux-amd64"
 ENV SIA_PACKAGE $SIA_PACKAGE
