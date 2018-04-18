@@ -29,7 +29,9 @@ do
   if [ -e "${DUMMY_DATA_DIR}/consensus" ]; then
     (echo "Created consensus folder successfully" && exit 0)
   else
-    (echo "Couldn't find consensus folder" && exit 1)
+    (echo "Couldn't find consensus folder" && \
+      docker logs sia-container && \
+      exit 1)
   fi
 
   curl -A "Sia-Agent" "http://localhost:9980/consensus"
