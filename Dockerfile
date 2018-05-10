@@ -7,7 +7,7 @@ ENV CGO_ENABLED 0
 
 RUN go get -d -u github.com/NebulousLabs/Sia/... && \
     cd $GOPATH/src/github.com/NebulousLabs/Sia && \
-    git checkout 6cf5638 && \
+    git checkout f4678bf && \
     make release
 
 FROM alpine
