@@ -25,7 +25,7 @@ RUN wget "$SIA_RELEASE" && \
 # Workaround for backwards compatibility with old images, which hardcoded the
 # Sia data directory as /mnt/sia. Creates a symbolic link so that any previous
 # path references stored in the Sia host config still work.
-RUN ln -s "$SIA_DATA_DIR" /mnt/sia
+RUN ln --symbolic "$SIA_DATA_DIR" /mnt/sia
 
 # Clean up.
 RUN apt-get remove -y wget unzip && \
