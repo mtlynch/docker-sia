@@ -24,22 +24,50 @@ COPY --from=zip_downloader /sia/siac "${SIA_DIR}/siac"
 COPY --from=zip_downloader /sia/siad "${SIA_DIR}/siad"
 
 RUN apt-get update
-RUN apt-get install -y socat
+RUN apt-get install --yes \
+      bash \
+      socat \
+      sudo
 
 # Workaround for backwards compatibility with old images, which hardcoded the
 # Sia data directory as /mnt/sia. Creates a symbolic link so that any previous
 # path references stored in the Sia host config still work.
 RUN ln --symbolic "$SIA_DATA_DIR" /mnt/sia
 
+# Information for Sia system account.
+ARG SIA_USER="sia"
+ARG SIA_GROUP="sia"
+RUN set -uxe && \
+    groupadd "$SIA_GROUP" && \
+    useradd \
+      --comment "Sia system account" \
+      --home-dir "$SIA_DIR" \
+      --create-home \
+      --system \
+      --gid "$SIA_GROUP" \
+      "$SIA_USER"
+
 EXPOSE 9980 9981 9982
 
 WORKDIR "$SIA_DIR"
 
+ENV SIA_USER="$SIA_USER"
+ENV SIA_GROUP="$SIA_GROUP"
+ENV SIA_DIR "$SIA_DIR"
 ENV SIA_DATA_DIR "$SIA_DATA_DIR"
 ENV SIA_MODULES gctwhr
 
-ENTRYPOINT socat tcp-listen:9980,reuseaddr,fork tcp:localhost:8000 & \
-  ./siad \
-    --modules "$SIA_MODULES" \
-    --sia-directory "$SIA_DATA_DIR" \
-    --api-addr "localhost:8000"
+COPY entrypoint.sh /entrypoint.sh
+ENTRYPOINT set -uxe && \
+      chown \
+            --no-dereference \
+            --recursive \
+            "${SIA_USER}:${SIA_GROUP}" "$SIA_DATA_DIR" && \
+      chown \
+            --no-dereference \
+            --recursive \
+            "${SIA_USER}:${SIA_GROUP}" "$SIA_DIR" && \
+      sudo -u "$SIA_USER" ./siad \
+            --modules "$SIA_MODULES" \
+            --sia-directory "$SIA_DATA_DIR" \
+            --api-addr "localhost:8000"
