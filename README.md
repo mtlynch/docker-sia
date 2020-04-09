@@ -8,6 +8,8 @@ This Docker image is no longer maintained and will no longer receive updates aft
 
 The Nebulous team has [repeatedly](https://github.com/NebulousLabs/Sia/issues/1386) [made](https://www.reddit.com/r/siacoin/comments/8rdred/video_sia_weekly_update_week_of_june_11_2018/e0qm1qs/?st=jigmt8rp&sh=384b3060) [changes](https://github.com/NebulousLabs/Sia/issues/1391) [that](https://www.reddit.com/r/siacoin/comments/fr9p85/development_update_for_weeks_of_march_15th_and/flv7aq5/) [break](https://www.reddit.com/r/siacoin/comments/fku4wt/we_just_released_sia_v144/fkvgrmm/) the Sia Docker image and other downstream clients of Sia. The team [has not been receptive to feedback](https://www.reddit.com/r/siacoin/comments/fku4wt/we_just_released_sia_v144/fkvgrmm/) about correcting these problems, and I no longer have the bandwidth to create workarounds.
 
+**Update (2020-04-08)**: The Nebulous team now offers [an official Sia Docker image](https://github.com/NebulousLabs/docker-sia).
+
 ## Supported Tags
 
 * latest: The latest official binary release.
